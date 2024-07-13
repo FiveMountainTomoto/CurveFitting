@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CurveFitting"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="曲线拟合" Height="450" Width="800">
     <Grid>
         <Menu HorizontalAlignment="Left" Height="42" VerticalAlignment="Top" Width="794" Margin="0,0,-0.4,0">
             <Button x:Name="readingDataButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Height="32" Click="ReadingDataButton_Click">
