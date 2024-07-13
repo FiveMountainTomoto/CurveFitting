@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CurveFitting
+﻿namespace CurveFitting
 {
-    partial class CurveFittingCalculate
+    public partial class CurveFittingCalculate
     {
         public class Point
         {

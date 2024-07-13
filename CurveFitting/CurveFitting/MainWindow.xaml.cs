@@ -1,19 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Win32;
-using System.IO;
 using Point = CurveFitting.CurveFittingCalculate.Point;
 
 namespace CurveFitting
@@ -42,8 +32,8 @@ namespace CurveFitting
             if (opfdl.ShowDialog() == true)
             {
                 curFit = new CurveFittingCalculate(opfdl.FileName);
-                var strs = from p in curFit.Points
-                           select $"{p.ID}\t{p.X}\t{p.Y}";
+                IEnumerable<string> strs = from p in curFit.Points
+                                           select $"{p.ID}\t{p.X}\t{p.Y}";
                 dataTextBox.Text = "ID,\tX,\tY\n";
                 dataTextBox.Text += string.Join("\n", strs);
             }
@@ -52,12 +42,12 @@ namespace CurveFitting
         private void CloseCurveButton_Click(object sender, RoutedEventArgs e)
         {
             // 两点间插入 10 个点
-            var pois = curFit.GetFittingPoints(true, 10, out var parms);
+            List<Point> pois = curFit.GetFittingPoints(true, 10, out List<double[]> parms);
             OutPut(pois, parms);
         }
         private void UnclosedCurveButton_Click(object sender, RoutedEventArgs e)
         {
-            var pois = curFit.GetFittingPoints(false, 10, out var parms);
+            List<Point> pois = curFit.GetFittingPoints(false, 10, out List<double[]> parms);
             OutPut(pois, parms);
         }
 
@@ -67,15 +57,21 @@ namespace CurveFitting
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("起点ID\t终点ID\tE0\tE1\tE2\tE3\tF0\tF1\tF2\tF3");
             int i = 0;
-            foreach(var p in parms)
+            foreach (double[] p in parms)
             {
-                if (i == 13) sb.AppendLine($"{i}\t0\t{p[0]:F3}\t{p[1]:F3}\t{p[2]:F3}\t{p[3]:F3}\t{p[4]:F3}\t{p[5]:F3}\t{p[6]:F3}\t{p[7]:F3}");// 闭合曲线的最后一个结果用的
-                else sb.AppendLine($"{i}\t{++i}\t{p[0]:F3}\t{p[1]:F3}\t{p[2]:F3}\t{p[3]:F3}\t{p[4]:F3}\t{p[5]:F3}\t{p[6]:F3}\t{p[7]:F3}");
+                if (i == 13)
+                {
+                    sb.AppendLine($"{i}\t0\t{p[0]:F3}\t{p[1]:F3}\t{p[2]:F3}\t{p[3]:F3}\t{p[4]:F3}\t{p[5]:F3}\t{p[6]:F3}\t{p[7]:F3}");// 闭合曲线的最后一个结果用的
+                }
+                else
+                {
+                    sb.AppendLine($"{i}\t{++i}\t{p[0]:F3}\t{p[1]:F3}\t{p[2]:F3}\t{p[3]:F3}\t{p[4]:F3}\t{p[5]:F3}\t{p[6]:F3}\t{p[7]:F3}");
+                }
             }
             resultTextBox.Text = sb.ToString();
 
             // 输出曲线拟合点
-            var poiStrs = from p in pois select $"{p.X:F3},{p.Y:F3}";
+            IEnumerable<string> poiStrs = from p in pois select $"{p.X:F3},{p.Y:F3}";
             curPoiTextBox.Text = string.Join("\n", poiStrs);
 
             tabControl.SelectedIndex = 1;

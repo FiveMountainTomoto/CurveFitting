@@ -20,7 +20,7 @@ namespace CurveFitting
             parms = new List<double[]>();
         }
 
-        public List<Point> GetFittingPoints(bool isClose,int insPoiCount, out List<double[]> parms)
+        public List<Point> GetFittingPoints(bool isClose, int insPoiCount, out List<double[]> parms)
         {
             List<Point> pois = new List<Point>();
             this.parms.Clear();
