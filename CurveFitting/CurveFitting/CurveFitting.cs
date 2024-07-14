@@ -28,12 +28,12 @@ namespace CurveFitting
             int i1 = 0, i2 = 1;
             while (true)
             {
-                if (i1 > Points.Count - 1 || i2 > Points.Count - 1)
+                if (i2 > Points.Count - 1)
                 {
                     break;
                 }
 
-                fitPois.AddRange(GetCurvePoint(i1++, i2++, 100));
+                fitPois.AddRange(GetCurvePoint(i1++, i2++, insPoiCount));
             }
             // 如果是闭合曲线就再闭合到起始点
             if (isClose)
@@ -121,7 +121,7 @@ namespace CurveFitting
             parms.Add(new double[] { E0, E1, E2, E3, F0, F1, F2, F3 });
             // 计算拟合点坐标
             return from i in Enumerable.Range(1, poiCount)
-                   let z = 1.0 / i
+                   let z = (double)i / poiCount
                    select new Point
                    {
                        X = E0 + E1 * z + E2 * z * z + E3 * z * z * z,
