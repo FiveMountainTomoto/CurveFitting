@@ -22,7 +22,7 @@ namespace CurveFitting
 
         public List<Point> GetFittingPoints(bool isClose, int insPoiCount, out List<double[]> parms)
         {
-            List<Point> pois = new List<Point>();
+            List<Point> fitPois = new List<Point>();
             this.parms.Clear();
             ComplementPoint(isClose);
             int i1 = 0, i2 = 1;
@@ -33,15 +33,15 @@ namespace CurveFitting
                     break;
                 }
 
-                pois.AddRange(GetCurvePoint(i1++, i2++, 100));
+                fitPois.AddRange(GetCurvePoint(i1++, i2++, 100));
             }
-            // 如果是闭合曲线就闭合到起始点
+            // 如果是闭合曲线就再闭合到起始点
             if (isClose)
             {
-                pois.AddRange(GetCurvePoint(i1, 0, insPoiCount));
+                fitPois.AddRange(GetCurvePoint(i1, 0, insPoiCount));
             }
             parms = this.parms;
-            return pois;
+            return fitPois;
         }
 
         // 补充点
@@ -105,7 +105,7 @@ namespace CurveFitting
         {
             GetGrad(i0, out double cos0, out double sin0);
             GetGrad(i1, out double cos1, out double sin1);
-            Point p0 = insPois[i0 + 2], p1 = insPois[i1 + 2];
+            Point p0 = Points[i0], p1 = Points[i1];
             double r = Sqrt(Pow(p1.X - p0.X, 2) + Pow(p1.Y - p0.Y, 2));
             // 计算曲线参数
             double
