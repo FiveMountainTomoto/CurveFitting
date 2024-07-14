@@ -55,7 +55,7 @@
                     <TextBox x:Name="resultTextBox" HorizontalAlignment="Left" Height="315" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="749" Grid.ColumnSpan="3"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="拟合点坐标" HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="77" Margin="-2,-2,-15.8,0">
+            <TabItem Header="拟合点坐标" HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="77" Margin="0,0,-0.2,0">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="131*"/>
